@@ -160,6 +160,7 @@ def run():
     downloader = Downloader(
         output_folder=config.output_folder,
         yt_dlp_format=config.yt_dlp_format,
+        cookies_file=config.cookies_file,
     )
 
     encoder: Encoder | None = None

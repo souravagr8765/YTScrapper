@@ -35,10 +35,11 @@ def _make_progress_hook(on_progress: Optional[Callable] = None):
 
 
 class Downloader:
-    def __init__(self, output_folder: str, yt_dlp_format: str):
+    def __init__(self, output_folder: str, yt_dlp_format: str, cookies_file: Optional[str] = None):
         self.output_folder = Path(output_folder)
         self.output_folder.mkdir(parents=True, exist_ok=True)
         self.yt_dlp_format = yt_dlp_format
+        self.cookies_file = cookies_file or None
 
     def fetch_playlist_videos(self, playlist_url: str) -> List[Video]:
         """
@@ -52,6 +53,9 @@ class Downloader:
             "extract_flat": "in_playlist",  # No download, just metadata
             "ignoreerrors": True,
         }
+        if self.cookies_file:
+            ydl_opts["cookiefile"] = self.cookies_file
+            logger.debug("Using cookies file for playlist fetch: %s", self.cookies_file)
         videos: List[Video] = []
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(playlist_url, download=False)
@@ -98,6 +102,9 @@ class Downloader:
             # Write thumbnail as well (optional metadata)
             "writethumbnail": False,
         }
+        if self.cookies_file:
+            ydl_opts["cookiefile"] = self.cookies_file
+            logger.debug("Using cookies file for download: %s", self.cookies_file)
 
         logger.info("Downloading: [%s] %s", video.video_id, video.title)
         try:

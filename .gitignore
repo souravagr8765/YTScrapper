@@ -16,6 +16,8 @@ env/
 
 # --- Local App Files ---
 .env
+cookies.txt
+config.yaml
 ytpl_sync.db
 ytpl_sync.log
 downloads/
@@ -29,5 +31,4 @@ secrets/
 .DS_Store
 Thumbs.db
 desktop.ini
-config.yaml
 

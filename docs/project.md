@@ -80,6 +80,11 @@ download:
   format: "bestvideo[vcodec^=hev][height<=1080]+bestaudio/bestvideo[vcodec^=avc][height<=1080]+bestaudio/bestvideo[height<=1080]+bestaudio/best"
   output_folder: "./downloads"
 
+  # Optional: Netscape-format cookies file to bypass YouTube bot detection.
+  # Export from your browser (e.g. via a browser extension like "Get cookies.txt")
+  # and point this to the file. Set to null to disable.
+  cookies_file: "./cookies.txt"
+
 encode:
   # Set enabled: true to run FFmpeg H.265 compression after each download.
   enabled: true

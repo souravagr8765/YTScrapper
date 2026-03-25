@@ -42,6 +42,7 @@ class AppConfig:
     # Download settings
     yt_dlp_format: str
     output_folder: str
+    cookies_file: Optional[str]   # Path to Netscape-format cookies file; None = no cookies
 
     # Encoding
     encode: EncodeConfig
@@ -127,10 +128,13 @@ def load_config(config_path: str = "config.yaml") -> AppConfig:
         ffmpeg_path=enc.get("ffmpeg_path", "ffmpeg"),
     )
 
+    cookies_raw = dl.get("cookies_file") or None  # treat empty string as None too
+
     return AppConfig(
         playlists=raw.get("playlists", []),
         yt_dlp_format=dl.get("format", "bestvideo[vcodec^=hev][height<=1080]+bestaudio/best[height<=1080]"),
         output_folder=dl.get("output_folder", "./downloads"),
+        cookies_file=cookies_raw,
         encode=encode_cfg,
         storage_mode=storage.get("mode", "local"),
         local_destination=storage.get("local_destination", "./output"),
